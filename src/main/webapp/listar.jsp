@@ -47,7 +47,10 @@
         <div  id="lista">
         <h1>Listado de productos</h1>
         <% List<Productos> misProductos = (List<Productos>) request.getAttribute("misProductos");
+            int num_paginas = (int) request.getAttribute("num_paginas");
+            int pagina = (int) request.getAttribute("pagina");
         %>
+        <p>Mostran página: ${pagina} de <%= num_paginas%></p>
         <table class="table table-hover">
             <tr><th>id</th><th>Nombre</th><td>Imagen</td><td>Categoría</td><td>Precio</td><td>Borrar</td><td>Actualizar</td></tr>
             <% for( Productos p: misProductos) { 
@@ -61,6 +64,19 @@
             </tr>    
             
             <% } %>
+            <%
+                for (int i = 1; i <= num_paginas; i++){
+                    if (pagina == i) {
+                        
+            %>
+            <%= i %>
+            <%      } else {
+            %>
+            <a href="ServletProductos?op=listar&pagina=<%= i %>"><%= i %></a>
+            <%
+                    }
+                } 
+            %>
         </table>
         </div>
         <script>
